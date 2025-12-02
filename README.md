@@ -31,15 +31,15 @@ SimpleShare是一个多租户（SaaS）化的内容分享平台，具有以下�
 ## 项目预览
 |  |  |
 | ---- | ---- |
-| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/1.png" width="45%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/2.png" width="45%"> |
-| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/3.png" width="45%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/4.png" width="45%"> |
-| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/5.png" width="45%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/6.png" width="45%"> |
-| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/7.png" width="45%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/8.png" width="45%"> |
-| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/9.png" width="45%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/10.png" width="45%"> |
-| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/11.png" width="45%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/12.png" width="45%"> |
-| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/13.png" width="45%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/14.png" width="45%"> |
-| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/15.png" width="45%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/16.png" width="45%"> |
-| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/17.png" width="45%"> |  |
+| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/1.png" width="80%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/2.png" width="80%"> |
+| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/3.png" width="80%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/4.png" width="80%"> |
+| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/5.png" width="80%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/6.png" width="80%"> |
+| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/7.png" width="80%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/8.png" width="80%"> |
+| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/9.png" width="80%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/10.png" width="80%"> |
+| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/11.png" width="80%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/12.png" width="80%"> |
+| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/13.png" width="80%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/14.png" width="80%"> |
+| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/15.png" width="80%"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/16.png" width="80%"> |
+| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/17.png" width="80%"> |  |
 
 
 ## 🏗️ 技术架构
@@ -357,20 +357,16 @@ http://localhost:8080/doc.html
 
 ---
 
-## 📞 联系方式
-
-- 项目地址：[https://gitee.com/GreenSoftware/simple-share](https://gitee.com/GreenSoftware/simple-share)
-- 问题反馈：[Issues](https://gitee.com/GreenSoftware/simple-share/issues)
-- 邮箱：support@easyjx.cn
-
-
 
 ## 📞 联系方式
 
 ### 交流群汇总：
-微信号：xmgcode、xmgcode88
-<img src="https://github.com/xmgcode88/simple-share/blob/main/images/xmgcode.png" width="200" title="微信1：xmgocde">
-<img src="https://github.com/xmgcode88/simple-share/blob/main/images/xmgcode88.png" width="200" title="微信2：xmgocde88">
-<img src="https://github.com/xmgcode88/simple-share/blob/main/images/990035173.png" width="200" title="QQ群二维码">
+**微信号：xmgcode、xmgcode88**
+
+| xmgcode | xmgcode88 | QQ群 |
+| :---: | :---: | :---: |
+| <img src="https://github.com/xmgcode88/simple-share/blob/main/images/xmgcode.png" width="200" title="微信1：xmgocde"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/xmgcode88.png" width="200" title="微信2：xmgocde88"> | <img src="https://github.com/xmgcode88/simple-share/blob/main/images/990035173.png" width="200" title="QQ群二维码"> |
+
+
 
 **© 2025 小码哥. 保留所有权利.**
