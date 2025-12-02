@@ -401,6 +401,14 @@ http://localhost:8080/doc.html
 - 问题反馈：[Issues](https://gitee.com/GreenSoftware/simple-share/issues)
 - 邮箱：support@easyjx.cn
 
----
 
-**© 2025 SimpleShare. 保留所有权利.**
+## 📞 联系方式
+
+### 微信技术交流群：
+![微信技术交流群1](https://github.com/xmgcode88/simple-share/blob/main/images/xmgcode.png)
+![微信技术交流群2](https://github.com/xmgcode88/simple-share/blob/main/images/xmgcode88.pngg)
+
+### QQ群：
+![QQ群](https://github.com/xmgcode88/simple-share/blob/main/images/990035173.png)
+
+**© 2025 小码哥. 保留所有权利.**
