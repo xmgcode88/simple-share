@@ -661,7 +661,7 @@ const filteredArticles = computed<PortalArticle[]>(() => {
 })
 
 const isAllCategoryActive = computed(() => activeCategoryId.value === 'all')
-const isAIGoldCategory = computed(() => activeCategoryId.value === SPECIAL_CATEGORY_ID)
+const isAIGoldCategory = computed(() => activeCategoryId.value === SPECIAL_CATEGORY_ID || activeCategoryId.value === '8888AI')
 const aiGoldArticles = computed<PortalArticle[]>(() => sortArticlesByPriority([...categoryArticles.value]))
 
 const isListLoading = computed(() => {
@@ -703,11 +703,30 @@ const normalizeCategoryQuery = (value: unknown): string => {
   if (Array.isArray(value) && value.length > 0) {
     return normalizeCategoryQuery(value[0])
   }
-  if (value === undefined || value === null || value === '') {
-    // 默认显示AI黄金项目分类
-    return '8888'
+
+  const target = (value !== undefined && value !== null && value !== '') ? String(value) : null
+  const hasGold = categoryStore.categories?.some(c => String(c.id) === SPECIAL_CATEGORY_ID)
+
+  // 如果分类已加载
+  if (categoryStore.hasCategories) {
+    // 如果目标是8888但用户没有该分类，显示全部
+    if (target === SPECIAL_CATEGORY_ID && !hasGold) {
+      return 'all'
+    }
+    
+    // 如果没有指定分类，且用户有8888分类，默认显示8888，否则显示全部
+    if (target === null) {
+      return hasGold ? SPECIAL_CATEGORY_ID : 'all'
+    }
+    
+    return target
   }
-  return String(value)
+
+  // 分类未加载时
+  if (target) return target
+  
+  // 默认先显示all，等分类加载后再根据情况切换
+  return 'all'
 }
 
 const syncCategoryFromRoute = () => {
@@ -1039,6 +1058,13 @@ const setupIntersectionObserver = (element: Element | null) => {
 
 watch(
   () => [route.name, route.query.category],
+  () => {
+    syncCategoryFromRoute()
+  }
+)
+
+watch(
+  () => categoryStore.categories,
   () => {
     syncCategoryFromRoute()
   }

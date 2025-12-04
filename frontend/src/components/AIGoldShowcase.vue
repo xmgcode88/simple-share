@@ -15,26 +15,26 @@
         <div class="flex items-center justify-center min-h-[150px] relative z-10 py-6">
           <!-- Content -->
           <div class="w-full max-w-5xl space-y-4 text-center">
-            <div class="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20">
+            <div class="inline-flex items-center gap-3 px-5 py-3 rounded-2xl bg-black/30 backdrop-blur-md border border-amber-500/30 transform -rotate-2 hover:rotate-0 transition-transform duration-300 shadow-[0_0_15px_rgba(234,179,8,0.2)]">
               <span class="relative flex h-3 w-3">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-amber-400"></span>
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
               </span>
-              <span class="text-white font-semibold">AI淘金 · 独家专题</span>
+              <span class="text-amber-100 font-bold tracking-wider">AI 搞钱 · 路子野</span>
             </div>
 
             <div class="space-y-6">
-              <div class="ai-hero-banner">
+              <div class="ai-hero-banner transform hover:scale-105 transition-transform duration-500">
                 <div class="banner-content">
                   <div class="banner-title-line">
-                    <span class="banner-highlight">AI搞钱</span>
+                    <span class="banner-highlight">不想上班</span>
                     <span class="banner-separator">·</span>
-                    <span class="banner-text">AI副业</span>
+                    <span class="banner-text">只想搞钱</span>
                     <span class="banner-separator">·</span>
-                    <span class="banner-highlight">一对一陪跑</span>
+                    <span class="banner-highlight">坐等退休</span>
                   </div>
                   <div class="banner-subtitle">
-                    开启副业第一桶金
+                    搞钱姿势要帅，动作要快
                   </div>
                 </div>
                 <div class="banner-decoration">
@@ -45,10 +45,10 @@
 
               <div class="ai-description">
                 <p class="description-main">
-                  集成多元化AI副业项目，让你快速了解AI变现实战路径
+                  这里全是 AI 搞钱的野路子，带你弯道超车（小心翻车）
                 </p>
                 <p class="description-sub">
-                  涵盖AI写作、AI电商、自动化工具、知识付费等领域，每个项目都经过实战验证，助你轻松开启AI副业赚钱之路
+                  坑都帮你踩过了，再学不会我也没办法了，快上车！
                 </p>
               </div>
             </div>
@@ -63,7 +63,7 @@
 
         <div v-if="isLoading" class="loading-container">
           <div class="loading-spinner"></div>
-          <p class="loading-text">正在加载 AI 淘金内容...</p>
+          <p class="loading-text">正在疯狂挖掘 AI 金矿...</p>
         </div>
 
         <div v-else-if="articles.length" class="projects-grid">
@@ -130,7 +130,7 @@
                 <!-- 分类标签 -->
                 <div class="card-category">
                   <div class="category-dot"></div>
-                  <span>{{ article.categoryName || 'AI淘金' }}</span>
+                  <span>{{ article.categoryName || '搞钱项目' }}</span>
                 </div>
 
                 <!-- 标题和描述 -->
@@ -157,12 +157,12 @@
 
         <div v-else class="empty-state">
           <div class="empty-icon">🤖</div>
-          <h3 class="empty-title">暂无 AI 淘金内容</h3>
+          <h3 class="empty-title">金矿还是空的</h3>
           <p class="empty-description">
-            这里还没有 AI 淘金内容，快去发布一篇吸引用户点击的项目吧！
+            还没人来挖矿，赶紧来占个坑！
           </p>
           <router-link to="/editor" class="empty-action">
-            <span>发布第一个 AI 项目</span>
+            <span>我是矿主，我要发项目</span>
             <ArrowRight />
           </router-link>
         </div>
@@ -171,7 +171,7 @@
         <div v-if="isLoadingMore" class="py-8 text-center">
           <div class="inline-flex items-center gap-2 text-sm text-slate-500">
             <div class="loading-spinner-small"></div>
-            <span>正在加载更多 AI 淘金项目...</span>
+            <span>正在加载更多野路子...</span>
           </div>
         </div>
       </div>
@@ -334,20 +334,22 @@ onMounted(() => {
 }
 
 .ai-hero-section {
-  @apply relative overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-900 to-blue-800;
+  @apply relative overflow-hidden bg-gradient-to-br from-neutral-900 via-stone-900 to-zinc-900;
   min-height: 150px;
   padding-top: 2rem;
   border-radius: 2rem;
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 215, 0, 0.1);
 }
 
 .ai-particles-bg {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.15) 0, transparent 40%),
-    radial-gradient(circle at 80% 30%, rgba(56, 189, 248, 0.22) 0, transparent 45%),
-    radial-gradient(circle at 50% 70%, rgba(99, 102, 241, 0.18) 0, transparent 40%);
-  opacity: 0.7;
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0, transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(234, 179, 8, 0.2) 0, transparent 45%),
+    radial-gradient(circle at 50% 70%, rgba(217, 119, 6, 0.15) 0, transparent 40%);
+  opacity: 0.8;
   animation: floatParticles 18s ease-in-out infinite;
 }
 
@@ -358,9 +360,9 @@ onMounted(() => {
   right: 0;
   height: 150px;
   background:
-    radial-gradient(circle at 25% 25%, rgba(56, 189, 248, 0.3) 0, transparent 50%),
-    radial-gradient(circle at 75% 75%, rgba(248, 113, 113, 0.25) 0, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.2) 0, transparent 40%);
+    radial-gradient(circle at 25% 25%, rgba(250, 204, 21, 0.15) 0, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(251, 191, 36, 0.15) 0, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(252, 211, 77, 0.1) 0, transparent 40%);
   filter: blur(80px);
   animation: pulseGlow 15s ease-in-out infinite;
 }
@@ -418,21 +420,21 @@ onMounted(() => {
 }
 
 .description-main {
-  @apply text-xl sm:text-2xl text-white font-semibold leading-relaxed;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  @apply text-xl sm:text-2xl text-amber-50 font-semibold leading-relaxed;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
 }
 
 .description-sub {
-  @apply text-base sm:text-lg text-white/75 leading-relaxed max-w-4xl mx-auto;
-  text-shadow: 0 1px 15px rgba(0, 0, 0, 0.2);
+  @apply text-base sm:text-lg text-amber-100/70 leading-relaxed max-w-4xl mx-auto;
+  text-shadow: 0 1px 15px rgba(0, 0, 0, 0.5);
 }
 
 /* Hero Banner Styles */
 .ai-hero-banner {
   @apply relative pt-0 pb-8 px-6 rounded-3xl;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.2));
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 215, 0, 0.15);
   overflow: hidden;
 }
 
@@ -449,19 +451,20 @@ onMounted(() => {
 }
 
 .banner-highlight {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+  background: linear-gradient(135deg, #fcd34d 0%, #eab308 50%, #d97706 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   position: relative;
   animation: highlightGlow 3s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(234, 179, 8, 0.3));
 }
 
 .banner-highlight::after {
   content: '';
   position: absolute;
   inset: -4px;
-  background: radial-gradient(circle at center, rgba(251, 191, 36, 0.3), transparent 70%);
+  background: radial-gradient(circle at center, rgba(234, 179, 8, 0.3), transparent 70%);
   border-radius: 50%;
   z-index: -1;
   animation: highlightPulse 3s ease-in-out infinite;
@@ -860,32 +863,32 @@ onMounted(() => {
 
 /* Card Footer */
 .card-footer {
-  @apply flex justify-center pt-3 border-t border-gray-100;
+  @apply flex justify-center pt-4 pb-1 border-t border-gray-100 px-4;
 }
 
 .card-action {
-  @apply inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-50 to-orange-50 hover:from-amber-100 hover:to-orange-100 border border-amber-200 rounded-lg text-sm font-medium text-amber-700 transition-all duration-200;
+  @apply w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-slate-900 to-slate-800 hover:from-black hover:to-slate-900 border border-amber-500/30 rounded-xl text-sm font-bold text-amber-400 transition-all duration-300 shadow-md;
   position: relative;
   overflow: hidden;
 }
 
 .ai-project-card:hover .card-action {
-  @apply bg-gradient-to-r from-amber-100 to-orange-100 border-amber-300;
-  transform: scale(1.05);
+  @apply border-amber-400 shadow-lg shadow-amber-500/20;
+  transform: translateY(-2px);
 }
 
 .action-icon {
-  @apply w-4 h-4;
+  @apply w-4 h-4 text-amber-300;
 }
 
 .action-icon-start {
   animation: bounce 2s ease-in-out infinite;
-  filter: drop-shadow(0 1px 2px rgba(251, 191, 36, 0.4));
+  filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.6));
 }
 
 .action-icon-end {
   animation: bounce 2s ease-in-out infinite 0.5s;
-  filter: drop-shadow(0 1px 2px rgba(251, 191, 36, 0.4));
+  filter: drop-shadow(0 0 5px rgba(251, 191, 36, 0.6));
 }
 
 

@@ -33,7 +33,7 @@
                 <el-icon v-if="item.icon" class="category-item-icon">
                   <component :is="item.icon" />
                 </el-icon>
-                <span v-else-if="item.id === '8888'" class="category-item-icon">⚡</span>
+                <span v-else-if="item.id === '8888'" class="category-item-icon">💰</span>
                 <span class="category-item-name">{{ item.name }}</span>
               </button>
             </div>
@@ -57,11 +57,35 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { ArrowLeft, ArrowRight } from '@element-plus/icons-vue'
+import { ElMessageBox } from 'element-plus'
 import { usePublicCategoryStore } from '@/stores/publicCategory'
+import { useUserStore } from '@/stores/user'
 
 const router = useRouter()
 const route = useRoute()
 const categoryStore = usePublicCategoryStore()
+const userStore = useUserStore()
+const isVipUserType = computed(() => {
+  const userType = userStore.userInfo?.userType
+  if (userType === undefined || userType === null) {
+    return false
+  }
+  const normalized = String(userType).trim().toLowerCase()
+  if (!normalized) {
+    return false
+  }
+  if (normalized.includes('vip')) {
+    return true
+  }
+  return normalized === 'member' || normalized === '3'
+})
+const shouldSkipSpecialCategoryDialog = computed(() => {
+  const hasToken = typeof userStore.hasValidToken === 'function' ? userStore.hasValidToken() : false
+  if (hasToken && !userStore.userInfo) {
+    return true
+  }
+  return Boolean(userStore.isVipMember || isVipUserType.value)
+})
 
 interface CategoryItem {
   id: string | null
@@ -69,6 +93,10 @@ interface CategoryItem {
   name: string
   icon?: string
 }
+
+const SPECIAL_CATEGORY_ID = '21'
+const CONTACT_ARTICLE_PATH = '/membership'
+let isSpecialCategoryDialogOpen = false
 
 const categoryScrollRef = ref<HTMLElement | null>(null)
 const canScrollLeft = ref(false)
@@ -102,6 +130,67 @@ const scrollCategories = (direction: 'left' | 'right') => {
 
 const handleResize = () => {
   updateScrollState()
+}
+
+const getCategoryValueFromQuery = (value: unknown): string | null => {
+  if (Array.isArray(value) && value.length > 0) {
+    return getCategoryValueFromQuery(value[0])
+  }
+  if (value === undefined || value === null || value === '') {
+    return null
+  }
+  return String(value)
+}
+
+const showSpecialCategoryDialog = () => {
+  if (shouldSkipSpecialCategoryDialog.value) {
+    return
+  }
+  if (isSpecialCategoryDialogOpen) {
+    return
+  }
+
+  isSpecialCategoryDialogOpen = true
+
+  const message = `
+    <div class="special-category-dialog-content" style="text-align: center; font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;">
+      <div class="special-category-icon" style="font-size: 56px; margin-bottom: 12px; animation: bounce 2s infinite;">🤪</div>
+      <p class="special-category-text" style="font-size: 20px; font-weight: bold; color: #333; margin-bottom: 12px; line-height: 1.4;">
+        谈钱伤感情！<br>
+        <span class="highlight-free" style="color: #ff6b6b; font-size: 24px; background: #fff0f0; padding: 2px 8px; border-radius: 4px;">本站主打一个交朋友</span>
+      </p>
+      <p class="special-category-subtext" style="color: #666; font-size: 15px; margin-bottom: 24px;">
+        不收米！不收米！不收米！ 🚫💰
+      </p>
+      <div class="special-category-action">
+        <a href="${CONTACT_ARTICLE_PATH}" class="special-category-btn" style="display: inline-block; background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%); color: white; padding: 12px 32px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 18px; box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4); transition: transform 0.2s;">
+          免费开通 🚀
+        </a>
+      </div>
+    </div>
+  `
+
+  ElMessageBox.alert(message, '温馨提示', {
+    dangerouslyUseHTMLString: true,
+    showConfirmButton: false,
+    customClass: 'special-category-message-box',
+    center: true,
+    width: '360px'
+  }).catch(() => {
+    // 捕获点击关闭按钮或遮罩层时的 reject
+  }).finally(() => {
+    isSpecialCategoryDialogOpen = false
+  })
+}
+
+const checkSpecialCategory = (value: unknown) => {
+  if (shouldSkipSpecialCategoryDialog.value) {
+    return
+  }
+  const normalized = getCategoryValueFromQuery(value)
+  if (normalized === SPECIAL_CATEGORY_ID) {
+    showSpecialCategoryDialog()
+  }
 }
 
 // 获取分类数据
@@ -159,6 +248,23 @@ watch(
   { immediate: true }
 )
 
+watch(
+  () => route.query.category,
+  value => {
+    checkSpecialCategory(value)
+  },
+  { immediate: true }
+)
+
+watch(
+  () => shouldSkipSpecialCategoryDialog.value,
+  (skip, previous) => {
+    if (!skip && previous) {
+      checkSpecialCategory(route.query.category)
+    }
+  }
+)
+
 // 判断分类是否激活
 const isActive = (categoryId: string | null) => {
   if (route.name !== 'Home') {
@@ -181,6 +287,9 @@ const handleCategoryClick = (categoryId: string | null) => {
     }
   } else {
     nextQuery.category = categoryId
+    if (categoryId === SPECIAL_CATEGORY_ID) {
+      showSpecialCategoryDialog()
+    }
   }
 
   router.push({
@@ -262,46 +371,49 @@ const handleCategoryClick = (categoryId: string | null) => {
 }
 
 .category-item:hover {
-  background: rgba(102, 126, 234, 0.1);
-  color: #667eea;
-  border-color: rgba(102, 126, 234, 0.2);
+  background: #ecfdf5;
+  color: #059669;
+  border-color: rgba(16, 185, 129, 0.1);
   transform: translateY(-1px);
 }
 
 .category-item.is-active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #fff;
   border-color: transparent;
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
 }
 
 .category-item.is-ai-gold {
   position: relative;
-  background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+  background: linear-gradient(135deg, #d97706 0%, #ea580c 100%);
   color: #fff;
-  border-color: transparent;
-  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(234, 88, 12, 0.25);
   font-weight: 600;
   animation: aiGoldPulse 3s ease-in-out infinite;
 }
 
 .category-item.is-ai-gold:hover {
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  border-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
+  box-shadow: 0 8px 25px rgba(234, 88, 12, 0.3);
 }
 
 .category-item.is-ai-gold.is-active {
-  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
+  background: linear-gradient(135deg, #b45309 0%, #c2410c 100%);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(194, 65, 12, 0.4);
 }
 
 .category-item.is-ai-gold::before {
   content: '';
   position: absolute;
-  inset: -2px;
-  background: linear-gradient(45deg, #f59e0b, #f97316, #ef4444, #f59e0b);
-  border-radius: 20px;
+  inset: -1px;
+  background: linear-gradient(45deg, #fbbf24, transparent, #fbbf24, transparent);
+  border-radius: 19px;
   z-index: -1;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -337,9 +449,9 @@ const handleCategoryClick = (categoryId: string | null) => {
 }
 
 .scroll-button:hover:not(:disabled) {
-  color: #4c51bf;
-  border-color: rgba(102, 126, 234, 0.4);
-  box-shadow: 0 8px 18px rgba(102, 126, 234, 0.2);
+  color: #059669;
+  border-color: #6ee7b7;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
   transform: translateY(-1px);
 }
 
@@ -404,5 +516,90 @@ const handleCategoryClick = (categoryId: string | null) => {
   100% {
     transform: rotate(360deg);
   }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+:global(.special-category-message-box .el-message-box__message) {
+  padding-top: 4px;
+}
+
+:global(.special-category-dialog-content) {
+  text-align: center;
+  padding: 10px 0;
+}
+
+:global(.special-category-icon) {
+  font-size: 48px;
+  margin-bottom: 16px;
+  animation: bounce 2s infinite;
+  line-height: 1;
+}
+
+:global(.special-category-text) {
+  font-size: 16px;
+  color: #334155;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+:global(.highlight-free) {
+  color: #f59e0b;
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0 4px;
+}
+
+:global(.special-category-subtext) {
+  font-size: 14px;
+  color: #94a3b8;
+  margin-bottom: 24px;
+}
+
+:global(.special-category-action) {
+  margin-top: 8px;
+}
+
+:global(.special-category-btn) {
+  display: inline-block;
+  padding: 10px 28px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 24px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+:global(.special-category-btn:hover) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+  color: white;
+  text-decoration: none;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+:global(.special-category-message-box) {
+  width: 360px !important;
+  max-width: 90vw !important;
+  padding-bottom: 24px;
+  border-radius: 16px;
 }
 </style>
